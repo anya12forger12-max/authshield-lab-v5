@@ -1,8 +1,9 @@
 version: 2
 
 updates:
+  # Python (backend) dependencies
   - package-ecosystem: pip
-    directory: "/"
+    directory: "/backend"
     schedule:
       interval: weekly
       day: monday
@@ -17,8 +18,9 @@ updates:
     reviewers:
       - anya12forger12-max
 
+  # Node.js (frontend) dependencies
   - package-ecosystem: npm
-    directory: "/"
+    directory: "/frontend"
     schedule:
       interval: weekly
       day: monday
@@ -33,6 +35,7 @@ updates:
     reviewers:
       - anya12forger12-max
 
+  # GitHub Actions
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
@@ -49,22 +52,3 @@ updates:
     open-pull-requests-limit: 5
     reviewers:
       - anya12forger12-max
-
-  # Auto-merge patch updates for all ecosystems
-  - package-ecosystem: pip
-    directory: "/"
-    schedule:
-      interval: weekly
-    labels:
-      - dependencies
-      - auto-merge
-    open-pull-requests-limit: 5
-
-  - package-ecosystem: npm
-    directory: "/"
-    schedule:
-      interval: weekly
-    labels:
-      - dependencies
-      - auto-merge
-    open-pull-requests-limit: 5
