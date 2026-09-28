@@ -14,7 +14,7 @@ interface UseKeyboardNavReturn {
 
 export function useKeyboardNav(
   containerRef: RefObject<HTMLElement>,
-  itemCount: number,
+  _itemCount: number,
   options: UseKeyboardNavOptions = {}
 ): UseKeyboardNavReturn {
   const { orientation = 'vertical', loop = true, typeAhead = true } = options;

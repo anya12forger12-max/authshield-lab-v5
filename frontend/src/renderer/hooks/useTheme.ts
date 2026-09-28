@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useAppStore } from '../store/appStore';
-import { getTheme, applyTheme, type ThemeConfig } from '../themes/theme-engine';
+import { getTheme, applyTheme } from '../themes/theme-engine';
 import type { Theme } from '../types';
 
 export function useTheme() {

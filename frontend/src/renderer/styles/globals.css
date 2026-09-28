@@ -56,7 +56,7 @@
 }
 
 .sr-only-focusable:focus {
-  @apply relative w-auto h-auto p-normal m-0 overflow-visible;
+  @apply relative w-auto h-auto p-0 m-0 overflow-visible;
   clip: auto;
   white-space: normal;
 }

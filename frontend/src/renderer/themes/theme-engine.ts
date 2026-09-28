@@ -408,7 +408,6 @@ function ensureContrast(accent: string, background: string, minRatio = 4.5): str
   const bgRgb = hexToRgb(background);
   if (!bgRgb) return accent;
 
-  const bgLum = getLuminance(bgRgb.r, bgRgb.g, bgRgb.b);
   let best = accent;
   let bestRatio = ratio;
 

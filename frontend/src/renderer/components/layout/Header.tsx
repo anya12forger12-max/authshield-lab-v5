@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useAppStore } from '../../store/appStore';
 import { Breadcrumbs } from './Breadcrumbs';
 import { cn } from '../../utils/cn';

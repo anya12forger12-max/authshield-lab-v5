@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAppStore } from '../../store/appStore';
 import { Card, CardBody, CardHeader, CardTitle } from '../../components/common/Card';
 

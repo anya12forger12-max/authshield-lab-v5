@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AppProvider } from './contexts/AppContext';
 import { ScreenReaderAnnouncer } from './accessibility/ScreenReaderAnnouncer';
