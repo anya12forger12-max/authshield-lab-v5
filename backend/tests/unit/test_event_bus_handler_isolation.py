@@ -42,9 +42,7 @@ class TestHandlerFailureIsIsolated:
         "event",
         [
             pytest.param(AuditEventRecordedEvent(), id="str-event_type"),
-            pytest.param(
-                DomainEvent(event_type=EventType.AUDIT_EVENT), id="enum-event_type"
-            ),
+            pytest.param(DomainEvent(event_type=EventType.AUDIT_EVENT), id="enum-event_type"),
         ],
     )
     def test_publish_does_not_raise_when_a_handler_fails(self, event):
