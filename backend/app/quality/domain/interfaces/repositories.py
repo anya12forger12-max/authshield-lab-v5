@@ -164,6 +164,9 @@ class BenchmarkRepository(ABC):
     @abstractmethod
     def find_by_name(self, name: str) -> list[Benchmark]: ...
 
+    @abstractmethod
+    def find_all(self) -> list[Benchmark]: ...
+
 
 class PerformanceReportRepository(ABC):
     @abstractmethod

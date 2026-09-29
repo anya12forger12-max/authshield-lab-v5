@@ -257,6 +257,10 @@ class IReleaseRepository(ABC):
         ...
 
     @abstractmethod
+    def update_approval(self, approval_id: str, data: dict[str, Any]) -> Any | None:
+        ...
+
+    @abstractmethod
     def create_gate(self, data: dict[str, Any]) -> Any:
         ...
 
@@ -341,6 +345,10 @@ class IDiagnosticTraceRepository(ABC):
 
     @abstractmethod
     def get_all(self, limit: int = 50) -> list[Any]:
+        ...
+
+    @abstractmethod
+    def update(self, trace_id: str, data: dict[str, Any]) -> Any | None:
         ...
 
     @abstractmethod

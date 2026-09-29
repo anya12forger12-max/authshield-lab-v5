@@ -267,6 +267,9 @@ class InMemoryBenchmarkRepository(BenchmarkRepository):
     def find_by_name(self, name: str) -> list[Benchmark]:
         return [b for b in self._data.values() if b.name == name]
 
+    def find_all(self) -> list[Benchmark]:
+        return list(self._data.values())
+
 
 class InMemoryPerformanceReportRepository(PerformanceReportRepository):
     def __init__(self) -> None:

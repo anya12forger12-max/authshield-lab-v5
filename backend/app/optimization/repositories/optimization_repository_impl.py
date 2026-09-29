@@ -588,5 +588,14 @@ class InMemoryDiagnosticTraceRepository(IDiagnosticTraceRepository):
         items = sorted(self._traces.values(), key=lambda t: t.get("created_at", ""), reverse=True)
         return items[:limit]
 
+    def update(self, trace_id: str, data: dict[str, Any]) -> dict[str, Any] | None:
+        trace = self._traces.get(trace_id)
+        if not trace:
+            return None
+        for key in ("spans_json", "total_duration_ms", "updated_at"):
+            if key in data:
+                trace[key] = data[key]
+        return trace
+
     def delete(self, trace_id: str) -> bool:
         return self._traces.pop(trace_id, None) is not None

@@ -380,6 +380,23 @@ class InMemoryCompetencyRepository(ICompetencyRepository):
             results = [p for p in results if p["competency_id"] == competency_id]
         return results
 
+    def create_progress(self, data: dict[str, Any]) -> dict[str, Any]:
+        progress_id = data.get("id", str(uuid.uuid4()))
+        now = datetime.now(timezone.utc).isoformat()
+        progress = {
+            "id": progress_id,
+            "learner_id": data.get("learner_id"),
+            "competency_id": data.get("competency_id"),
+            "status": data.get("status", "not_started"),
+            "evidence_json": data.get("evidence_json"),
+            "assessed_at": data.get("assessed_at"),
+            "assessor_id": data.get("assessor_id"),
+            "created_at": now,
+            "updated_at": now,
+        }
+        self._progress[progress_id] = progress
+        return progress
+
     def update_progress(self, progress_id: str, data: dict[str, Any]) -> dict[str, Any] | None:
         progress = self._progress.get(progress_id)
         if not progress:

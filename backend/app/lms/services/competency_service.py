@@ -89,12 +89,13 @@ class CompetencyService:
                 return self._repo.update_progress(progress["id"], {"status": "in_progress"}) or progress
             raise ValueError(f"Learner already has competency in '{progress.get('status')}' status.")
 
-        now = datetime.now(timezone.utc).isoformat()
-        return self._repo.update_progress("", {}) or self._repo.create_competency_progress({
-            "learner_id": learner_id,
-            "competency_id": competency_id,
-            "status": "in_progress",
-        })
+        return self._repo.create_progress(
+            {
+                "learner_id": learner_id,
+                "competency_id": competency_id,
+                "status": "in_progress",
+            }
+        )
 
     def achieve_competency(
         self,
