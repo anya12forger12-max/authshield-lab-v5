@@ -127,23 +127,50 @@ jobs:
           name: release-artifacts
           path: dist/
 
+      - name: Package release assets
+        run: |
+          set -euo pipefail
+          ref="${GITHUB_REF_NAME}"
+          if [ -d dist/backend/dist ]; then
+            tar -czf "dist/authshield-backend-${ref}.tar.gz" -C dist/backend/dist .
+          else
+            echo "::warning::no backend build output found under dist/backend/dist"
+          fi
+          if [ -d dist/frontend/dist ]; then
+            (
+              cd dist/frontend/dist
+              zip -qr "../../authshield-frontend-web-${ref}.zip" . \
+                -x 'linux-unpacked/*' '*.AppImage' '*.deb' '*.rpm' '*.snap'
+            )
+            find dist/frontend/dist -maxdepth 1 -type f \
+              \( -name '*.AppImage' -o -name '*.deb' -o -name '*.rpm' -o -name '*.snap' \) \
+              -exec cp {} dist/ \;
+          else
+            echo "::warning::no frontend build output found under dist/frontend/dist"
+          fi
+          rm -rf dist/backend dist/frontend
+          echo "Release assets:"
+          ls -la dist/
+
       - name: Generate SHA256 checksums
         run: |
           cd dist
-          if ls ./* >/dev/null 2>&1; then
-            sha256sum ./* > SHA256SUMS.txt
+          if find . -maxdepth 1 -type f ! -name 'SHA256SUMS.txt' | grep -q .; then
+            find . -maxdepth 1 -type f ! -name 'SHA256SUMS.txt' -print0 \
+              | sort -z | xargs -0 -r sha256sum > SHA256SUMS.txt
             echo "Checksums generated:"
             cat SHA256SUMS.txt
           else
             echo "No build artifacts to checksum."
+            exit 1
           fi
 
-      - name: Upload checksums
+      - name: Upload release assets
         uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: checksums
-          path: dist/SHA256SUMS.txt
+          name: release-assets
+          path: dist/
           if-no-files-found: warn
           retention-days: 5
 
@@ -156,18 +183,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Download build artifacts
+      - name: Download release assets
         uses: actions/download-artifact@v8
         continue-on-error: true
         with:
-          name: release-artifacts
-          path: dist/
-
-      - name: Download checksums
-        uses: actions/download-artifact@v8
-        continue-on-error: true
-        with:
-          name: checksums
+          name: release-assets
           path: dist/
 
       - name: Check artifacts exist
