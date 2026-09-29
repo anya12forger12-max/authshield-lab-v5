@@ -19,10 +19,13 @@ def validate_profile_update(data: dict) -> ValidationResult:
     display_name = data.get("display_name")
     if display_name is not None:
         name_result = _user_validator.validate_length(
-            str(display_name), "display_name", min_length=1, max_length=64
+            str(display_name), "display_name", min_len=1, max_len=64
         )
         if not name_result.is_valid:
-            result.errors.extend(name_result.errors)
+            # Use merge() rather than errors.extend(): is_valid only flips
+            # via add_error()/merge(), so extending the list directly
+            # would leave is_valid True and let invalid input through.
+            result.merge(name_result)
 
     email = data.get("email")
     if email is not None and email:
