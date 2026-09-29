@@ -165,11 +165,21 @@ class EventBus:
             try:
                 await handler(event)
             except Exception:
+                # event_type is typed as the EventType enum on DomainEvent, but
+                # every domain event subclass declares it as a plain str (e.g.
+                # `event_type: str = "audit.event_recorded"`). Dereferencing
+                # `.value` on that str raised AttributeError *inside the
+                # handler-failure path*, so a single failing handler turned into
+                # an unhandled crash of publish() itself -- exactly what the
+                # surrounding try/except exists to prevent. Render whichever
+                # form we were actually given so logging can never be the
+                # thing that fails.
+                _et = event.event_type
                 logger.exception(
                     "Handler %s failed for event %s (%s)",
                     handler.__qualname__,
                     event.event_id,
-                    event.event_type.value,
+                    getattr(_et, "value", _et),
                 )
 
     def publish_sync(self, event: DomainEvent) -> None:
