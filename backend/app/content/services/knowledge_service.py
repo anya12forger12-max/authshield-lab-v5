@@ -89,15 +89,21 @@ class KnowledgeService:
             for n in all_nodes
         ]
         edges: list[dict[str, str]] = []
-        seen_edges: set[tuple[str, str]] = set()
+        # The key carries the edge kind. Related edges are bidirectional, so
+        # they dedupe on the sorted pair; prerequisites are *directed*, and
+        # previously shared the same direction-independent key space -- a
+        # prerequisite whose endpoints matched an already-seen related edge
+        # was silently dropped (graph reported edge_count 1 for two edges).
+        seen_edges: set[tuple[str, str, str]] = set()
         for n in all_nodes:
             for related_id in n.related_nodes:
-                edge_key = tuple(sorted((n.id, related_id)))
+                lo, hi = sorted((n.id, related_id))
+                edge_key = ("related", lo, hi)
                 if edge_key not in seen_edges:
                     seen_edges.add(edge_key)
                     edges.append({"source": n.id, "target": related_id})
             for prereq_id in n.prerequisites:
-                edge_key = tuple(sorted((prereq_id, n.id)))
+                edge_key = ("prereq", prereq_id, n.id)
                 if edge_key not in seen_edges:
                     seen_edges.add(edge_key)
                     edges.append({"source": prereq_id, "target": n.id})
