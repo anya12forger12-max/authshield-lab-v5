@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-import logging
 import uuid
 from datetime import datetime, timezone
 from typing import Any, Optional
 
+from ....shared.logging_config import get_logger
 from ..domain.entities.policy_entity import (
     PolicyCategory,
     PolicyStatus,
@@ -15,7 +15,7 @@ from ..domain.entities.policy_entity import (
 )
 from ..domain.interfaces.policy_engine_interface import IPolicyRegistry
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 
 class PolicyRegistry(IPolicyRegistry):

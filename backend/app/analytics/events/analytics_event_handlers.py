@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-import logging
 from typing import Any
 
+from ...shared.logging_config import get_logger
 from ...shared.events.event_bus import DomainEvent, EventType, EventBus
 from ..domain.events.analytics_events import (
     AnalyticsDashboardGenerated,
@@ -16,7 +16,7 @@ from ..domain.events.analytics_events import (
     QualityDashboardGenerated,
 )
 
-logger = logging.getLogger("analytics.event_handlers")
+logger = get_logger("analytics.event_handlers")
 
 
 async def handle_analytics_dashboard_generated(event: DomainEvent) -> None:

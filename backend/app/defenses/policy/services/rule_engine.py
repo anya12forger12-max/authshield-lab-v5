@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-import logging
 import uuid
 from typing import Any, Optional
 
+from ....shared.logging_config import get_logger
 from ..domain.entities.rule_entity import (
     RuleAction,
     RuleExecutionMode,
@@ -13,7 +13,7 @@ from ..domain.entities.rule_entity import (
 )
 from ..domain.interfaces.policy_engine_interface import IRuleEngine
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 
 class RuleEngine(IRuleEngine):

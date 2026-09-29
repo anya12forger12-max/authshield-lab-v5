@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-import logging
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any, Optional
+from ...shared.logging_config import get_logger
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 
 class PermissionCategory(str, Enum):
