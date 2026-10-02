@@ -12,7 +12,7 @@ from app.ecosystem.domain.entities.marketplace import (
     PackageCategory,
     PackageSearch,
 )
-from app.ecosystem.domain.entities.library import Bookmark, LibraryItem, LibraryItemType
+from app.ecosystem.domain.entities.library import LibraryItem, LibraryItemType
 from app.ecosystem.domain.entities.research import ResearchProject, ResearchStatus
 from app.ecosystem.services.marketplace_service import MarketplaceService
 
@@ -178,8 +178,6 @@ class TestLibraryService:
         assert result == []
 
     def test_add_bookmark(self):
-        import app.ecosystem.services.library_service as lib_mod
-        lib_mod.Bookmark = Bookmark
         from app.ecosystem.services.library_service import LibraryService
         repo = MagicMock()
         repo.add_bookmark = MagicMock()

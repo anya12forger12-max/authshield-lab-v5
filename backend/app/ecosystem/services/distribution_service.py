@@ -5,12 +5,13 @@ from __future__ import annotations
 import hashlib
 from typing import TYPE_CHECKING
 
+from ..domain.entities.content_distribution import (
+    DistributionPackage, DistributionManifest, DistributionItem,
+    ImportRecord, SyncOperation,
+)
+
 if TYPE_CHECKING:
     from ..domain.interfaces import DistributionRepository
-    from ..domain.entities.content_distribution import (
-        DistributionPackage, DistributionManifest, DistributionItem,
-        ImportRecord, SyncOperation,
-    )
 
 
 class DistributionService:

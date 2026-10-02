@@ -5,9 +5,10 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import TYPE_CHECKING
 
+from ..domain.entities.curriculum_exchange import ExchangePackage, PackageValidationReport
+
 if TYPE_CHECKING:
     from ..domain.interfaces import CurriculumExchangeRepository
-    from ..domain.entities.curriculum_exchange import ExchangePackage, PackageValidationReport
 
 
 class PackageValidationService:

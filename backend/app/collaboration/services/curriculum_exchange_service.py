@@ -4,14 +4,15 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from ..domain.entities.curriculum_exchange import (
+    ExchangePackage,
+    ExchangeManifest,
+    PackageValidationReport,
+    ExchangeHistory,
+)
+
 if TYPE_CHECKING:
     from ..domain.interfaces import CurriculumExchangeRepository
-    from ..domain.entities.curriculum_exchange import (
-        ExchangePackage,
-        ExchangeManifest,
-        PackageValidationReport,
-        ExchangeHistory,
-    )
 
 
 class CurriculumExchangeService:

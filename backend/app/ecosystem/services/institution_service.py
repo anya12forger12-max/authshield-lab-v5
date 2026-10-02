@@ -4,12 +4,13 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from ..domain.entities.institution import (
+    Organization, Department, AcademicProgram,
+    InstructorAssignment, ResourceAllocation,
+)
+
 if TYPE_CHECKING:
     from ..domain.interfaces import InstitutionRepository
-    from ..domain.entities.institution import (
-        Organization, Department, AcademicProgram,
-        InstructorAssignment, ResourceAllocation,
-    )
 
 
 class InstitutionService:
