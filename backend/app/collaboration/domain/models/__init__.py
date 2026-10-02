@@ -348,7 +348,7 @@ class KnowledgeCategoryModel(UUIDPrimaryKeyMixin, Base):
     article_count: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
 
 
-class ArticleVersionModel(Base):
+class ArticleVersionModel(UUIDPrimaryKeyMixin, Base):
     __tablename__ = "collab_article_versions"
 
     article_id: Mapped[str] = mapped_column(String(36), nullable=False, index=True)
@@ -362,7 +362,7 @@ class ArticleVersionModel(Base):
     )
 
 
-class ArticleCitationModel(Base):
+class ArticleCitationModel(UUIDPrimaryKeyMixin, Base):
     __tablename__ = "collab_article_citations"
 
     source_id: Mapped[str] = mapped_column(String(36), nullable=False, index=True)

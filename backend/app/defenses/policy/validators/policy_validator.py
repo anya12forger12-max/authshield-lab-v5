@@ -11,7 +11,7 @@ from ..domain.entities.policy_entity import (
     VALID_STATUS_TRANSITIONS,
 )
 from ..domain.entities.rule_entity import RuleCondition, RuleExecutionMode
-from ...shared.validation.validator import ValidationResult
+from ....shared.validation.validator import ValidationResult
 
 
 def validate_policy_data(data: dict[str, Any]) -> ValidationResult:

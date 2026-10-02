@@ -5,7 +5,7 @@ from __future__ import annotations
 from sqlalchemy import Boolean, DateTime, Float, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
-from ...shared.base_model import (
+from ....shared.base_model import (
     AuditMixin,
     Base,
     SoftDeleteMixin,

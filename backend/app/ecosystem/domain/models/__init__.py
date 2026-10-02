@@ -65,8 +65,18 @@ class LibraryItemModel(Base, TimestampMixin, UUIDPrimaryKeyMixin):
 
     bookmarks = relationship("BookmarkModel", back_populates="item", cascade="all, delete-orphan")
     annotations = relationship("AnnotationModel", back_populates="item", cascade="all, delete-orphan")
-    citations_as_source = relationship("CitationModel", foreign_keys="CitationModel.source_item_id", back_populates="source_item", cascade="all, delete-orphan")
-    citations_as_target = relationship("CitationModel", foreign_keys="CitationModel.target_item_id", back_populates="target_item", cascade="all, delete-orphan")
+    citations_as_source = relationship(
+        "app.ecosystem.domain.models.CitationModel",
+        foreign_keys="app.ecosystem.domain.models.CitationModel.source_item_id",
+        back_populates="source_item",
+        cascade="all, delete-orphan",
+    )
+    citations_as_target = relationship(
+        "app.ecosystem.domain.models.CitationModel",
+        foreign_keys="app.ecosystem.domain.models.CitationModel.target_item_id",
+        back_populates="target_item",
+        cascade="all, delete-orphan",
+    )
 
 
 class BookmarkModel(Base, TimestampMixin, UUIDPrimaryKeyMixin):
@@ -112,10 +122,26 @@ class ResearchProjectModel(Base, TimestampMixin, UUIDPrimaryKeyMixin):
     description: Mapped[str] = mapped_column(Text, default="")
     status: Mapped[str] = mapped_column(String(20), default="active")
 
-    literature = relationship("LiteratureEntryModel", back_populates="project", cascade="all, delete-orphan")
-    knowledge_maps = relationship("KnowledgeMapModel", back_populates="project", cascade="all, delete-orphan")
-    reading_lists = relationship("ReadingListModel", back_populates="project", cascade="all, delete-orphan")
-    bibliographies = relationship("BibliographyModel", back_populates="project", cascade="all, delete-orphan")
+    literature = relationship(
+        "app.ecosystem.domain.models.LiteratureEntryModel",
+        back_populates="project",
+        cascade="all, delete-orphan",
+    )
+    knowledge_maps = relationship(
+        "app.ecosystem.domain.models.KnowledgeMapModel",
+        back_populates="project",
+        cascade="all, delete-orphan",
+    )
+    reading_lists = relationship(
+        "app.ecosystem.domain.models.ReadingListModel",
+        back_populates="project",
+        cascade="all, delete-orphan",
+    )
+    bibliographies = relationship(
+        "app.ecosystem.domain.models.BibliographyModel",
+        back_populates="project",
+        cascade="all, delete-orphan",
+    )
 
 
 class LiteratureEntryModel(Base, TimestampMixin, UUIDPrimaryKeyMixin):
@@ -132,8 +158,15 @@ class LiteratureEntryModel(Base, TimestampMixin, UUIDPrimaryKeyMixin):
     read_status: Mapped[str] = mapped_column(String(20), default="unread")
     added_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
-    project = relationship("ResearchProjectModel", back_populates="literature")
-    noterefs = relationship("ResearchNoteModel", back_populates="entry", cascade="all, delete-orphan")
+    project = relationship(
+        "app.ecosystem.domain.models.ResearchProjectModel",
+        back_populates="literature",
+    )
+    noterefs = relationship(
+        "app.ecosystem.domain.models.ResearchNoteModel",
+        back_populates="entry",
+        cascade="all, delete-orphan",
+    )
 
 
 class ResearchNoteModel(Base, TimestampMixin, UUIDPrimaryKeyMixin):
@@ -142,7 +175,10 @@ class ResearchNoteModel(Base, TimestampMixin, UUIDPrimaryKeyMixin):
     entry_id: Mapped[str] = mapped_column(String(36), ForeignKey("ecosystem_literature_entries.id"), nullable=False)
     content: Mapped[str] = mapped_column(Text, nullable=False)
 
-    entry = relationship("LiteratureEntryModel", back_populates="noterefs")
+    entry = relationship(
+        "app.ecosystem.domain.models.LiteratureEntryModel",
+        back_populates="noterefs",
+    )
 
 
 class KnowledgeMapModel(Base, UUIDPrimaryKeyMixin):
@@ -153,7 +189,10 @@ class KnowledgeMapModel(Base, UUIDPrimaryKeyMixin):
     concepts: Mapped[str] = mapped_column(JSON, default=list)
     links: Mapped[str] = mapped_column(JSON, default=list)
 
-    project = relationship("ResearchProjectModel", back_populates="knowledge_maps")
+    project = relationship(
+        "app.ecosystem.domain.models.ResearchProjectModel",
+        back_populates="knowledge_maps",
+    )
 
 
 class ReadingListModel(Base, UUIDPrimaryKeyMixin):
@@ -164,7 +203,10 @@ class ReadingListModel(Base, UUIDPrimaryKeyMixin):
     entries: Mapped[str] = mapped_column(JSON, default=list)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
-    project = relationship("ResearchProjectModel", back_populates="reading_lists")
+    project = relationship(
+        "app.ecosystem.domain.models.ResearchProjectModel",
+        back_populates="reading_lists",
+    )
 
 
 class BibliographyModel(Base, UUIDPrimaryKeyMixin):
@@ -176,7 +218,10 @@ class BibliographyModel(Base, UUIDPrimaryKeyMixin):
     format: Mapped[str] = mapped_column(String(20), default="apa")
     generated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
-    project = relationship("ResearchProjectModel", back_populates="bibliographies")
+    project = relationship(
+        "app.ecosystem.domain.models.ResearchProjectModel",
+        back_populates="bibliographies",
+    )
 
 
 class OrganizationModel(Base, TimestampMixin, UUIDPrimaryKeyMixin):

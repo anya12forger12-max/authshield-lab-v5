@@ -15,7 +15,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Mapped, mapped_column
 
-from ...shared.base_model import Base, TimestampMixin, UUIDPrimaryKeyMixin
+from ....shared.base_model import Base, TimestampMixin, UUIDPrimaryKeyMixin
 
 
 class ReleaseModel(TimestampMixin, UUIDPrimaryKeyMixin, Base):
