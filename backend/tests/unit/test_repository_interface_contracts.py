@@ -28,7 +28,10 @@ from app.lms.services.competency_service import CompetencyService
 from app.optimization.repositories.optimization_repository_impl import (
     InMemoryDiagnosticTraceRepository,
 )
+from app.quality.domain.entities.accessibility_a11y import A11yScorecard
+from app.quality.domain.interfaces.repositories import A11yScorecardRepository
 from app.quality.repositories.quality_repository_impl import (
+    InMemoryA11yScorecardRepository,
     InMemoryBenchmarkHistoryRepository,
     InMemoryBenchmarkRepository,
     InMemoryPerformanceReportRepository,
@@ -104,3 +107,37 @@ class TestDiagnosticTraceUpdate:
     def test_update_missing_id_returns_none(self):
         repo = InMemoryDiagnosticTraceRepository()
         assert repo.update("does-not-exist", {"spans_json": "[]"}) is None
+
+
+# ---------------------------------------------------------------------------
+# Quality a11y scorecard listing, backing the scores GET route
+# ---------------------------------------------------------------------------
+
+
+class TestA11yScorecardRepositoryContract:
+    def test_find_all_returns_every_scorecard(self):
+        repo = InMemoryA11yScorecardRepository()
+        repo.save(A11yScorecard(category="contrast", score=92.0))
+        repo.save(A11yScorecard(category="labels", score=88.0))
+
+        result = repo.find_all()
+
+        assert {s.category for s in result} == {"contrast", "labels"}
+
+    def test_find_all_on_empty_repository_is_empty(self):
+        assert InMemoryA11yScorecardRepository().find_all() == []
+
+    def test_list_scorecards_route_returns_saved_scorecards(self):
+        """Regression: the GET /a11y/scorecards handler called `find_all()` on
+        the concrete repo, which did not define it -> AttributeError (HTTP 500)."""
+        from app.quality.api import quality_routes
+
+        repo = quality_routes._a11y_scorecard_repo
+        assert isinstance(repo, A11yScorecardRepository)
+
+        scorecard = A11yScorecard(category="contrast", score=95.0)
+        repo.save(scorecard)
+
+        result = quality_routes.list_scorecards()
+
+        assert scorecard.id in {s.id for s in result}

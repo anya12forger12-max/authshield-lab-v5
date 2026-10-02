@@ -10,6 +10,30 @@ from app.quality.domain.entities.performance import Benchmark, BenchmarkHistory,
 from app.quality.domain.entities.quality import ModuleHealth, QualityDashboard, QualityScore
 from app.quality.domain.entities.release import Release, ReleaseNote, ReleaseReadiness
 from app.quality.domain.entities.testing import CoverageReport, TestCase, TestSuite
+from app.quality.domain.interfaces.repositories import (
+    A11yAuditRepository,
+    A11yProfileRepository,
+    A11yScorecardRepository,
+    ApplicationMetricRepository,
+    BenchmarkHistoryRepository,
+    BenchmarkRepository,
+    BuildHealthRepository,
+    CoverageReportRepository,
+    DiagnosticBundleRepository,
+    DiagnosticCheckRepository,
+    KeyboardShortcutRepository,
+    ModuleHealthRepository,
+    ObservabilitySnapshotRepository,
+    PerformanceReportRepository,
+    QualityDashboardRepository,
+    QualityScoreRepository,
+    ReleaseNoteRepository,
+    ReleaseReadinessRepository,
+    ReleaseRepository,
+    TechnicalDebtItemRepository,
+    TestCaseRepository,
+    TestSuiteRepository,
+)
 from app.quality.repositories.quality_repository_impl import (
     InMemoryA11yAuditRepository,
     InMemoryA11yProfileRepository,
