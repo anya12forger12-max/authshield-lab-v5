@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from domain.events.ecosystem_events import (
+from ..domain.events.ecosystem_events import (
     PackageInstalled,
     PackageRemoved,
     LibraryItemAdded,

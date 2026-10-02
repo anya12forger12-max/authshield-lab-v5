@@ -5,8 +5,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from domain.interfaces import CurriculumExchangeRepository
-    from domain.entities.curriculum_exchange import (
+    from ..domain.interfaces import CurriculumExchangeRepository
+    from ..domain.entities.curriculum_exchange import (
         ExchangePackage,
         ExchangeManifest,
         PackageValidationReport,
@@ -33,7 +33,7 @@ class CurriculumExchangeService:
         dependencies: list[str] | None = None,
         metadata: dict | None = None,
     ) -> ExchangePackage:
-        from domain.entities.curriculum_exchange import ExchangePackage, PackageType
+        from ..domain.entities.curriculum_exchange import ExchangePackage, PackageType
         pkg = ExchangePackage(
             name=name,
             description=description,
@@ -92,7 +92,7 @@ class CurriculumExchangeService:
         pkg = self._repo.get_package(package_id)
         if not pkg:
             raise ValueError(f"Package {package_id} not found")
-        from domain.entities.curriculum_exchange import ExchangeManifest, ExchangeItem
+        from ..domain.entities.curriculum_exchange import ExchangeManifest, ExchangeItem
         item = ExchangeItem(
             name=pkg.name,
             path=f"/packages/{package_id}/{pkg.name}",
@@ -189,7 +189,7 @@ class CurriculumExchangeService:
         performed_by: str,
         details: dict | None = None,
     ) -> None:
-        from domain.entities.curriculum_exchange import ExchangeHistory
+        from ..domain.entities.curriculum_exchange import ExchangeHistory
         entry = ExchangeHistory(
             package_id=package_id,
             action=action,

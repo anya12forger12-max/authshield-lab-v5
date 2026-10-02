@@ -6,10 +6,10 @@ import re
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from domain.entities.academic_hub import InstitutionalProject, SharedCurriculumPackage
-    from domain.entities.curriculum_exchange import ExchangePackage
-    from domain.entities.peer_review import PeerReview
-    from domain.entities.knowledge_base import KnowledgeArticle
+    from ..domain.entities.academic_hub import InstitutionalProject, SharedCurriculumPackage
+    from ..domain.entities.curriculum_exchange import ExchangePackage
+    from ..domain.entities.peer_review import PeerReview
+    from ..domain.entities.knowledge_base import KnowledgeArticle
 
 
 class CollaborationValidator:

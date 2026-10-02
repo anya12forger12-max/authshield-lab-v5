@@ -4,17 +4,17 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from domain.interfaces import (
+from ..domain.interfaces import (
     MarketplaceRepository, LibraryRepository, ResearchRepository,
     InstitutionRepository, DistributionRepository,
 )
 
 if TYPE_CHECKING:
-    from domain.entities.marketplace import LocalPackage, InstallationRecord, PackageSearch
-    from domain.entities.library import LibraryItem, Bookmark, Annotation, Citation
-    from domain.entities.research import ResearchProject, LiteratureEntry, ResearchNote, KnowledgeMap, ReadingList, Bibliography
-    from domain.entities.institution import Organization, Department, AcademicProgram, InstructorAssignment, ResourceAllocation
-    from domain.entities.content_distribution import DistributionPackage, DistributionManifest, ImportRecord, SyncOperation
+    from ..domain.entities.marketplace import LocalPackage, InstallationRecord, PackageSearch
+    from ..domain.entities.library import LibraryItem, Bookmark, Annotation, Citation
+    from ..domain.entities.research import ResearchProject, LiteratureEntry, ResearchNote, KnowledgeMap, ReadingList, Bibliography
+    from ..domain.entities.institution import Organization, Department, AcademicProgram, InstructorAssignment, ResourceAllocation
+    from ..domain.entities.content_distribution import DistributionPackage, DistributionManifest, ImportRecord, SyncOperation
 
 
 class InMemoryMarketplaceRepository(MarketplaceRepository):

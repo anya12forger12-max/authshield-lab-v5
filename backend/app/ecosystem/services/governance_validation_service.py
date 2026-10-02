@@ -5,8 +5,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from domain.entities.marketplace import LocalPackage
-    from domain.entities.content_distribution import DistributionPackage
+    from ..domain.entities.marketplace import LocalPackage
+    from ..domain.entities.content_distribution import DistributionPackage
 
 
 class GovernanceValidationService:

@@ -4,24 +4,24 @@ from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException
 
-from domain.entities.academic_hub import ProjectStatus, ReviewStatus
-from domain.entities.peer_review import ReviewStage, ReviewDecisionType
-from repositories.collaboration_repository_impl import (
+from ..domain.entities.academic_hub import ProjectStatus, ReviewStatus
+from ..domain.entities.peer_review import ReviewStage, ReviewDecisionType
+from ..repositories.collaboration_repository_impl import (
     InMemoryAcademicHubRepository,
     InMemoryCurriculumExchangeRepository,
     InMemoryResearchWorkspaceRepository,
     InMemoryPeerReviewRepository,
     InMemoryKnowledgeBaseRepository,
 )
-from services.academic_hub_service import AcademicHubService
-from services.curriculum_exchange_service import CurriculumExchangeService
-from services.research_service import ResearchService
-from services.peer_review_service import PeerReviewService
-from services.knowledge_base_service import KnowledgeBaseService
-from services.package_validation_service import PackageValidationService
-from validators.collaboration_validator import CollaborationValidator
+from ..services.academic_hub_service import AcademicHubService
+from ..services.curriculum_exchange_service import CurriculumExchangeService
+from ..services.research_service import ResearchService
+from ..services.peer_review_service import PeerReviewService
+from ..services.knowledge_base_service import KnowledgeBaseService
+from ..services.package_validation_service import PackageValidationService
+from ..validators.collaboration_validator import CollaborationValidator
 
-router = APIRouter(prefix="/api/v1/collaboration", tags=["collaboration"])
+router = APIRouter(prefix="/collaboration", tags=["collaboration"])
 
 _academic_repo = InMemoryAcademicHubRepository()
 _exchange_repo = InMemoryCurriculumExchangeRepository()

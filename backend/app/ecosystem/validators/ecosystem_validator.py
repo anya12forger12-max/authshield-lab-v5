@@ -6,11 +6,11 @@ import re
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from domain.entities.marketplace import LocalPackage
-    from domain.entities.library import LibraryItem
-    from domain.entities.research import ResearchProject
-    from domain.entities.institution import Organization
-    from domain.entities.content_distribution import DistributionPackage
+    from ..domain.entities.marketplace import LocalPackage
+    from ..domain.entities.library import LibraryItem
+    from ..domain.entities.research import ResearchProject
+    from ..domain.entities.institution import Organization
+    from ..domain.entities.content_distribution import DistributionPackage
 
 
 class EcosystemValidator:

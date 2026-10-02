@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from domain.events.collaboration_events import (
+from ..domain.events.collaboration_events import (
     PackageExchanged,
     ReviewSubmitted,
     ReviewApproved,

@@ -5,8 +5,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from domain.interfaces import MarketplaceRepository
-    from domain.entities.marketplace import LocalPackage, PackageSearch, InstallationRecord
+    from ..domain.interfaces import MarketplaceRepository
+    from ..domain.entities.marketplace import LocalPackage, PackageSearch, InstallationRecord
 
 
 class MarketplaceService:

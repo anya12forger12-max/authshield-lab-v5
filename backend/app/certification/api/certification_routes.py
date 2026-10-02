@@ -8,7 +8,7 @@ from typing import Any, Optional
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
 
-router = APIRouter(prefix="/api/v1/certification", tags=["certification"])
+router = APIRouter(prefix="/certification", tags=["certification"])
 
 
 # ======================================================================

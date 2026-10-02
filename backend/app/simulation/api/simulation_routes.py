@@ -27,7 +27,7 @@ from ..services.replay_service import ReplayService
 from ..services.results_service import ResultsService
 from ..services.export_service import ExportService
 
-router = APIRouter(prefix="/api/v1/simulation", tags=["simulation"])
+router = APIRouter(prefix="/simulation", tags=["simulation"])
 
 # ------------------------------------------------------------------
 # Singleton repository instances

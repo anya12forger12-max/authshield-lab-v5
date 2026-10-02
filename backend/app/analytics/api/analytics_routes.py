@@ -10,7 +10,7 @@ from pydantic import BaseModel, Field
 
 from ...shared.responses import SuccessResponse
 
-router = APIRouter(prefix="/api/v1/analytics", tags=["analytics"])
+router = APIRouter(prefix="/analytics", tags=["analytics"])
 
 
 # ======================================================================

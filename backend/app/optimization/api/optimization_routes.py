@@ -12,7 +12,7 @@ from ...shared.responses import SuccessResponse
 
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/api/v1/optimization", tags=["optimization"])
+router = APIRouter(prefix="/optimization", tags=["optimization"])
 
 # ---------------------------------------------------------------------------
 # Lazy-loaded service singletons

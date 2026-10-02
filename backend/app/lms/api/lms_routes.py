@@ -12,7 +12,7 @@ from ...shared.responses import SuccessResponse
 
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/api/v1/lms", tags=["lms"])
+router = APIRouter(prefix="/lms", tags=["lms"])
 
 # ---------------------------------------------------------------------------
 # Lazy-loaded service singletons (wired at application startup or first use)

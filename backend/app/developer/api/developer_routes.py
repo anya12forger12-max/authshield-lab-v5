@@ -5,7 +5,7 @@ from __future__ import annotations
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
-router = APIRouter(prefix="/api/v1/developer", tags=["developer"])
+router = APIRouter(prefix="/developer", tags=["developer"])
 
 
 # ---------------------------------------------------------------------------

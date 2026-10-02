@@ -6,26 +6,26 @@ from datetime import datetime, timezone
 
 from fastapi import APIRouter, HTTPException
 
-from domain.entities.marketplace import (
+from ..domain.entities.marketplace import (
     LocalPackage, PackageCategory, PackageSearch, InstallationRecord,
 )
-from domain.entities.library import LibraryItem, LibraryItemType
-from domain.entities.research import ResearchProject, ResearchStatus
-from domain.entities.institution import Organization, OrgType
-from domain.entities.content_distribution import DistributionPackage
-from repositories.ecosystem_repository_impl import (
+from ..domain.entities.library import LibraryItem, LibraryItemType
+from ..domain.entities.research import ResearchProject, ResearchStatus
+from ..domain.entities.institution import Organization, OrgType
+from ..domain.entities.content_distribution import DistributionPackage
+from ..repositories.ecosystem_repository_impl import (
     InMemoryMarketplaceRepository, InMemoryLibraryRepository,
     InMemoryResearchRepository, InMemoryInstitutionRepository,
     InMemoryDistributionRepository,
 )
-from services.marketplace_service import MarketplaceService
-from services.library_service import LibraryService
-from services.research_service import ResearchService
-from services.institution_service import InstitutionService
-from services.distribution_service import DistributionService
-from validators.ecosystem_validator import EcosystemValidator
+from ..services.marketplace_service import MarketplaceService
+from ..services.library_service import LibraryService
+from ..services.research_service import ResearchService
+from ..services.institution_service import InstitutionService
+from ..services.distribution_service import DistributionService
+from ..validators.ecosystem_validator import EcosystemValidator
 
-router = APIRouter(prefix="/api/v1/ecosystem", tags=["ecosystem"])
+router = APIRouter(prefix="/ecosystem", tags=["ecosystem"])
 
 _market_repo = InMemoryMarketplaceRepository()
 _library_repo = InMemoryLibraryRepository()
@@ -482,7 +482,7 @@ def list_sync():
 
 @router.get("/validate/package/{package_id}")
 def validate_package(package_id: str):
-    from services.governance_validation_service import GovernanceValidationService
+    from ..services.governance_validation_service import GovernanceValidationService
     pkg = _market_repo.get_package(package_id)
     if not pkg:
         raise HTTPException(404, "Package not found")

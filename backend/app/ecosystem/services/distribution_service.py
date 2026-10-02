@@ -6,8 +6,8 @@ import hashlib
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from domain.interfaces import DistributionRepository
-    from domain.entities.content_distribution import (
+    from ..domain.interfaces import DistributionRepository
+    from ..domain.entities.content_distribution import (
         DistributionPackage, DistributionManifest, DistributionItem,
         ImportRecord, SyncOperation,
     )

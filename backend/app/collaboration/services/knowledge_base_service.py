@@ -5,7 +5,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from domain.interfaces import KnowledgeBaseRepository
+    from ..domain.entities.knowledge_base import (
+        ArticleCitation,
+        KnowledgeArticle,
+        KnowledgeCategory,
+    )
+    from ..domain.interfaces import KnowledgeBaseRepository
 
 
 class KnowledgeBaseService:
@@ -20,7 +25,7 @@ class KnowledgeBaseService:
         author: str,
         tags: list[str] | None = None,
     ) -> "KnowledgeArticle":
-        from domain.entities.knowledge_base import KnowledgeArticle
+        from ..domain.entities.knowledge_base import KnowledgeArticle
         article = KnowledgeArticle(
             title=title,
             content=content,
@@ -110,7 +115,7 @@ class KnowledgeBaseService:
         description: str,
         parent_id: str | None = None,
     ) -> "KnowledgeCategory":
-        from domain.entities.knowledge_base import KnowledgeCategory
+        from ..domain.entities.knowledge_base import KnowledgeCategory
         cat = KnowledgeCategory(
             name=name,
             description=description,
@@ -153,7 +158,7 @@ class KnowledgeBaseService:
         target_id: str,
         citation_type: str,
     ) -> "ArticleCitation":
-        from domain.entities.knowledge_base import ArticleCitation
+        from ..domain.entities.knowledge_base import ArticleCitation
         citation = ArticleCitation(
             source_id=source_id,
             target_id=target_id,
@@ -166,7 +171,7 @@ class KnowledgeBaseService:
         return self._repo.get_citations_for_article(article_id)
 
     def _record_version(self, article_id: str, version: int, content: str, author: str) -> None:
-        from domain.entities.knowledge_base import ArticleVersion
+        from ..domain.entities.knowledge_base import ArticleVersion
         v = ArticleVersion(
             article_id=article_id,
             version=version,

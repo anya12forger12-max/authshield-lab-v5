@@ -67,7 +67,7 @@ from app.quality.services.quality_dashboard_service import QualityDashboardServi
 from app.quality.services.release_service import ReleaseService
 from app.quality.services.test_platform_service import TestPlatformService
 
-router = APIRouter(prefix="/api/v1/quality", tags=["quality"])
+router = APIRouter(prefix="/quality", tags=["quality"])
 
 _quality_score_repo: QualityScoreRepository = InMemoryQualityScoreRepository()
 _quality_dash_repo: QualityDashboardRepository = InMemoryQualityDashboardRepository()

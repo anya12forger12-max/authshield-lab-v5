@@ -6,8 +6,8 @@ from datetime import datetime, timezone
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from domain.interfaces import AcademicHubRepository
-    from domain.entities.academic_hub import (
+    from ..domain.interfaces import AcademicHubRepository
+    from ..domain.entities.academic_hub import (
         InstitutionalProject,
         SharedCurriculumPackage,
         ImportedResource,
@@ -30,7 +30,7 @@ class AcademicHubService:
         lead: str,
         members: list[str] | None = None,
     ) -> InstitutionalProject:
-        from domain.entities.academic_hub import InstitutionalProject
+        from ..domain.entities.academic_hub import InstitutionalProject
         project = InstitutionalProject(
             name=name,
             description=description,
@@ -88,7 +88,7 @@ class AcademicHubService:
         accessibility_report: dict | None = None,
         localization_report: dict | None = None,
     ) -> SharedCurriculumPackage:
-        from domain.entities.academic_hub import SharedCurriculumPackage
+        from ..domain.entities.academic_hub import SharedCurriculumPackage
         pkg = SharedCurriculumPackage(
             title=title,
             source_institution=source_institution,
@@ -116,7 +116,7 @@ class AcademicHubService:
         status: str = "pending",
         validation_results: dict | None = None,
     ) -> ImportedResource:
-        from domain.entities.academic_hub import ImportedResource
+        from ..domain.entities.academic_hub import ImportedResource
         resource = ImportedResource(
             package_id=package_id,
             imported_by=imported_by,
@@ -140,7 +140,7 @@ class AcademicHubService:
         assignees: list[str] | None = None,
         due_date: str = "",
     ) -> ReviewRequest:
-        from domain.entities.academic_hub import ReviewRequest, ReviewStatus
+        from ..domain.entities.academic_hub import ReviewRequest, ReviewStatus
         request = ReviewRequest(
             title=title,
             request_type=request_type,
@@ -170,7 +170,7 @@ class AcademicHubService:
         version: str,
         submitted_by: str,
     ) -> PublicationQueueItem:
-        from domain.entities.academic_hub import PublicationQueueItem
+        from ..domain.entities.academic_hub import PublicationQueueItem
         item = PublicationQueueItem(
             content_id=content_id,
             content_type=content_type,
@@ -196,7 +196,7 @@ class AcademicHubService:
         return self._repo.get_version_history_for_entity(entity_id)
 
     def get_dashboard(self) -> AcademicHubDashboard:
-        from domain.entities.academic_hub import AcademicHubDashboard
+        from ..domain.entities.academic_hub import AcademicHubDashboard
         projects = self._repo.all_projects()
         packages = self._repo.all_shared_packages()
         resources = self._repo.all_imported_resources()
@@ -224,7 +224,7 @@ class AcademicHubService:
         changes: list[str],
         author: str,
     ) -> None:
-        from domain.entities.academic_hub import VersionHistory
+        from ..domain.entities.academic_hub import VersionHistory
         entry = VersionHistory(
             entity_id=entity_id,
             entity_type=entity_type,

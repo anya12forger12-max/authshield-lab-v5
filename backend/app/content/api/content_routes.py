@@ -20,7 +20,7 @@ from ..services.media_service import MediaService
 from ..services.knowledge_service import KnowledgeService
 from ..validators.content_validator import ContentValidator
 
-router = APIRouter(prefix="/api/v1/content", tags=["content-studio"])
+router = APIRouter(prefix="/content", tags=["content-studio"])
 
 # Shared in-memory instances (sufficient for an offline educational platform)
 _course_repo = InMemoryCourseRepository()

@@ -6,7 +6,17 @@ from datetime import datetime, timezone
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from domain.interfaces import ResearchWorkspaceRepository
+    from ..domain.entities.research_workspace import (
+        Bibliography,
+        Citation,
+        KnowledgeMap,
+        LiteratureCollection,
+        LiteratureEntry,
+        ReadingList,
+        ResearchNote,
+        ResearchProject,
+    )
+    from ..domain.interfaces import ResearchWorkspaceRepository
 
 
 class ResearchService:
@@ -20,7 +30,7 @@ class ResearchService:
         principal_investigator: str,
         team: list[str] | None = None,
     ) -> "ResearchProject":
-        from domain.entities.research_workspace import ResearchProject
+        from ..domain.entities.research_workspace import ResearchProject
         project = ResearchProject(
             name=name,
             description=description,
@@ -67,7 +77,7 @@ class ResearchService:
         project_id: str,
         name: str,
     ) -> "LiteratureCollection":
-        from domain.entities.research_workspace import LiteratureCollection
+        from ..domain.entities.research_workspace import LiteratureCollection
         collection = LiteratureCollection(project_id=project_id, name=name)
         self._repo.add_literature_collection(collection)
         return collection
@@ -88,7 +98,7 @@ class ResearchService:
         keywords: list[str] | None = None,
         notes: str = "",
     ) -> "LiteratureEntry":
-        from domain.entities.research_workspace import LiteratureEntry
+        from ..domain.entities.research_workspace import LiteratureEntry
         entry = LiteratureEntry(
             title=title,
             author=author,
@@ -141,7 +151,7 @@ class ResearchService:
         content: str,
         created_by: str = "anonymous",
     ) -> "ResearchNote":
-        from domain.entities.research_workspace import ResearchNote
+        from ..domain.entities.research_workspace import ResearchNote
         note = ResearchNote(
             entry_id=entry_id,
             content=content,
@@ -161,7 +171,7 @@ class ResearchService:
         page: int = 0,
         note: str = "",
     ) -> "Citation":
-        from domain.entities.research_workspace import Citation
+        from ..domain.entities.research_workspace import Citation
         citation = Citation(
             source_id=source_id,
             target_id=target_id,
@@ -180,7 +190,7 @@ class ResearchService:
         project_id: str,
         name: str,
     ) -> "KnowledgeMap":
-        from domain.entities.research_workspace import KnowledgeMap
+        from ..domain.entities.research_workspace import KnowledgeMap
         km = KnowledgeMap(project_id=project_id, name=name)
         self._repo.add_knowledge_map(km)
         return km
@@ -198,7 +208,7 @@ class ResearchService:
         km = self._repo.get_knowledge_map(map_id)
         if not km:
             raise ValueError(f"Knowledge map {map_id} not found")
-        from domain.entities.research_workspace import KnowledgeConcept
+        from ..domain.entities.research_workspace import KnowledgeConcept
         concept = KnowledgeConcept(name=name, description=description, category=category)
         km.concepts.append(concept)
         self._repo.update_knowledge_map(km)
@@ -215,7 +225,7 @@ class ResearchService:
         km = self._repo.get_knowledge_map(map_id)
         if not km:
             raise ValueError(f"Knowledge map {map_id} not found")
-        from domain.entities.research_workspace import KnowledgeLink
+        from ..domain.entities.research_workspace import KnowledgeLink
         link = KnowledgeLink(
             source_id=source_id,
             target_id=target_id,
@@ -235,7 +245,7 @@ class ResearchService:
         name: str,
         item_ids: list[str] | None = None,
     ) -> "ReadingList":
-        from domain.entities.research_workspace import ReadingList
+        from ..domain.entities.research_workspace import ReadingList
         rl = ReadingList(project_id=project_id, name=name, item_ids=item_ids)
         self._repo.add_reading_list(rl)
         return rl
@@ -250,7 +260,7 @@ class ResearchService:
         entries: list[str] | None = None,
         format: str = "apa",
     ) -> "Bibliography":
-        from domain.entities.research_workspace import Bibliography
+        from ..domain.entities.research_workspace import Bibliography
         bib = Bibliography(
             project_id=project_id,
             name=name,

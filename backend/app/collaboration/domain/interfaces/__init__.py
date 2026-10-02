@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from domain.entities.academic_hub import (
+    from ...domain.entities.academic_hub import (
         InstitutionalProject,
         SharedCurriculumPackage,
         ImportedResource,
@@ -14,13 +14,13 @@ if TYPE_CHECKING:
         PublicationQueueItem,
         VersionHistory,
     )
-    from domain.entities.curriculum_exchange import (
+    from ...domain.entities.curriculum_exchange import (
         ExchangePackage,
         ExchangeManifest,
         PackageValidationReport,
         ExchangeHistory,
     )
-    from domain.entities.research_workspace import (
+    from ...domain.entities.research_workspace import (
         ResearchProject,
         LiteratureCollection,
         LiteratureEntry,
@@ -30,14 +30,14 @@ if TYPE_CHECKING:
         ReadingList,
         Bibliography,
     )
-    from domain.entities.peer_review import (
+    from ...domain.entities.peer_review import (
         PeerReview,
         ReviewComment,
         ReviewDecision,
         ReviewRevision,
         ReviewHistory,
     )
-    from domain.entities.knowledge_base import (
+    from ...domain.entities.knowledge_base import (
         KnowledgeArticle,
         KnowledgeCategory,
         ArticleVersion,
