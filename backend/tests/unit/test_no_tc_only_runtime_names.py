@@ -173,7 +173,7 @@ class _UnboundNameVisitor(ast.NodeVisitor):
         self._annotations(node)
         self._enter(node)
 
-    def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef) -> None:  # noqa: N802
+    def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef) -> None:
         # ast.NodeVisitor dispatches on the node class name, so this spelling is
         # the protocol's requirement rather than a mixed-case slip.
         self._defaults(node)
