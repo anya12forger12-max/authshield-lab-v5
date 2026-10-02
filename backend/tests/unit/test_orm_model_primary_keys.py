@@ -1,8 +1,9 @@
 """Every declarative ORM model in one shared registry must be valid.
 
-Two defects hid behind a fully green suite, because nothing under ``app/``
-imports these modules at runtime -- so ``import app.main`` succeeded, the app
-booted, and all 952 tests passed while both were live.
+Two defects hid behind a fully green suite in the repositories that carry these
+model packages, because nothing under ``app/`` imports them at runtime -- so
+``import app.main`` succeeded, the app booted, and the whole test suite passed
+while both were live.
 
 1. ``ArticleVersionModel`` and ``ArticleCitationModel`` were declared with a bare
    ``Base`` -- no ``UUIDPrimaryKeyMixin``, no ``primary_key=True`` column -- so
@@ -15,18 +16,20 @@ booted, and all 952 tests passed while both were live.
    ``app.collaboration.domain.models`` therefore could not be imported at all.
 
 2. The ``app.ecosystem.domain.models`` relationships referenced their targets by
-   bare string (``relationship("CitationModel")``). Twelve class names exist
-   twice across packages in this one registry, so ``configure_mappers()``
-   aborted with ``InvalidRequestError: Multiple classes found for path
-   "CitationModel"`` -- and would abort again for the next ambiguous name. Those
-   references are now fully qualified.
+   bare string (``relationship("CitationModel")``). Several class names are
+   mapped more than once across packages in this one shared registry, so
+   ``configure_mappers()`` aborted with ``InvalidRequestError: Multiple classes
+   found for path "CitationModel"`` -- and would have aborted again for the next
+   ambiguous name. Those references are now fully qualified.
 
 Both are registry-wide: ``configure_mappers()`` and ``Base.metadata.create_all()``
 (the latter is ``init_db()``, called from the FastAPI lifespan) operate over
 *every* mapped class, not just the ones a request touches.
 
 These tests import every ``models`` module first, then assert the whole registry
-is valid, so neither class of defect can come back unnoticed.
+is valid, so neither class of defect can come back unnoticed. A repository with
+no ``collaboration`` model package skips only the two article-specific checks;
+the registry-wide sweep still covers every model that repository does have.
 """
 
 from __future__ import annotations
