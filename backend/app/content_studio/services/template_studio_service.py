@@ -159,7 +159,30 @@ class TemplateStudioService:
         return template
 
     def get_templates_by_type(self, template_type: str) -> list[dict[str, Any]]:
-        all_templates = self._template_repo.get_all()
-        if isinstance(all_templates, dict):
-            all_templates = all_templates.get("items", [])
-        return [t for t in all_templates if t.get("template_type") == template_type]
+        """Return every template of ``template_type``.
+
+        The repository applies this filter itself and answers with a *paginated*
+        envelope, so filtering a single default page silently drops every match
+        past ``per_page`` (the repository default is 20) -- a caller asking for
+        a type that only appears on a later page got an empty list instead of
+        an error.  Page through the envelope until it is exhausted rather than
+        re-implementing the filter here.
+        """
+        results: list[dict[str, Any]] = []
+        page = 1
+        while True:
+            envelope = self._template_repo.get_all(
+                page=page, per_page=100, template_type=template_type
+            )
+            if not isinstance(envelope, dict):
+                # Defensive: a plain sequence from an alternative implementation.
+                return [
+                    t
+                    for t in envelope
+                    if isinstance(t, dict) and t.get("template_type") == template_type
+                ]
+            batch = list(envelope.get("items") or [])
+            results.extend(t for t in batch if isinstance(t, dict))
+            if not batch or page >= int(envelope.get("pages") or 1):
+                return results
+            page += 1
