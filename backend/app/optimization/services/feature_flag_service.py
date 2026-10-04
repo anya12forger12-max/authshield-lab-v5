@@ -120,9 +120,29 @@ class FeatureFlagService:
         return results
 
     def get_enabled_flags(self) -> list[dict[str, Any]]:
-        """Return all currently enabled flags."""
-        result = self._flag_repo.get_all(enabled_only=True)
-        return result.get("items", [])
+        """Return every currently enabled flag.
+
+        The repository applies ``enabled_only`` itself and answers with a
+        *paginated* envelope, so reading a single default page silently dropped
+        every enabled flag past ``per_page`` (the repository default is 20): a
+        rollout past the twentieth flag would simply never take effect, with no
+        error anywhere.  Page through the envelope until it is exhausted rather
+        than re-implementing the filter here.
+        """
+        results: list[dict[str, Any]] = []
+        page = 1
+        while True:
+            envelope = self._flag_repo.get_all(
+                page=page, per_page=100, enabled_only=True
+            )
+            if not isinstance(envelope, dict):
+                # Defensive: a plain sequence from an alternative implementation.
+                return [f for f in envelope if isinstance(f, dict)]
+            batch = list(envelope.get("items") or [])
+            results.extend(f for f in batch if isinstance(f, dict))
+            if not batch or page >= int(envelope.get("pages") or 1):
+                return results
+            page += 1
 
     # ------------------------------------------------------------------
     # Config Profiles
