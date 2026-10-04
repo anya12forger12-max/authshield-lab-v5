@@ -132,9 +132,7 @@ class FeatureFlagService:
         results: list[dict[str, Any]] = []
         page = 1
         while True:
-            envelope = self._flag_repo.get_all(
-                page=page, per_page=100, enabled_only=True
-            )
+            envelope = self._flag_repo.get_all(page=page, per_page=100, enabled_only=True)
             if not isinstance(envelope, dict):
                 # Defensive: a plain sequence from an alternative implementation.
                 return [f for f in envelope if isinstance(f, dict)]
