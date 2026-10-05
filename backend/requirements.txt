@@ -13,7 +13,7 @@ structlog==24.1.0
 python-json-logger==2.0.7
 plotly==7.1.0
 pandas==2.2.0
-reportlab==4.1.0
+reportlab==5.0.1
 weasyprint==70.0
 aiofiles==25.1.0
 httpx==0.26.0
