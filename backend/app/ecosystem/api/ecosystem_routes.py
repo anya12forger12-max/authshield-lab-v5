@@ -11,7 +11,6 @@ from ..domain.entities.marketplace import (
 )
 from ..domain.entities.library import LibraryItem, LibraryItemType
 from ..domain.entities.research import ResearchProject, ResearchStatus
-from ..domain.entities.institution import Organization, OrgType
 from ..domain.entities.content_distribution import DistributionPackage
 from ..repositories.ecosystem_repository_impl import (
     InMemoryMarketplaceRepository, InMemoryLibraryRepository,

@@ -25,7 +25,7 @@ class Organization:
     def __init__(
         self,
         name: str,
-        org_type: OrgType,
+        org_type: str,
         departments: list[str] | None = None,
         settings: dict | None = None,
     ) -> None:
