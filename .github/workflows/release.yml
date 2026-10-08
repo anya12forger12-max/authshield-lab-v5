@@ -227,7 +227,7 @@ jobs:
           done
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         if: steps.check-artifacts.outputs.has_files == 'true'
         with:
           name: AuthShield Lab ${{ github.ref_name }}
