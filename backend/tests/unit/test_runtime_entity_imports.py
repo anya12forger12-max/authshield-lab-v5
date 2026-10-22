@@ -205,7 +205,19 @@ def test_collaboration_and_ecosystem_areas_are_registered() -> None:
 
     from app.api.v1.router import api_v1_router
 
-    mounted = {r.path for r in api_v1_router.routes if isinstance(r, APIRoute)}
+    mounted: set[str] = set()
+
+    def _collect(router, prefix: str = "") -> None:
+        for route in getattr(router, "routes", []):
+            if isinstance(route, APIRoute):
+                mounted.add(prefix + route.path)
+            elif hasattr(route, "original_router") and hasattr(route.original_router, "routes"):
+                _collect(
+                    route.original_router,
+                    prefix + getattr(router, "prefix", ""),
+                )
+
+    _collect(api_v1_router)
 
     assert any(p.startswith("/api/v1/collaboration") for p in mounted), sorted(mounted)[:10]
     assert any(p.startswith("/api/v1/ecosystem") for p in mounted)
