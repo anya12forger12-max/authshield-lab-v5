@@ -25,7 +25,7 @@ function generateBreadcrumbs(pathname: string): { label: string; path: string; i
   const crumbs: { label: string; path: string; isCurrent: boolean }[] = [];
 
   for (let i = 0; i < segments.length; i++) {
-    const path = '/' + segments.slice(0, i + 1).join('/');
+    const path = `/${  segments.slice(0, i + 1).join('/')}`;
     const navItem = findNavItemByPath(path);
 
     crumbs.push({

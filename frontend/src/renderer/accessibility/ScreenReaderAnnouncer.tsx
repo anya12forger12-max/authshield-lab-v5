@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useCallback, useRef, useEffect } from 'react';
+import type React from 'react';
+import { createContext, useContext, useState, useCallback, useRef, useEffect } from 'react';
 
 interface ScreenReaderContextValue {
   announce: (message: string, priority?: 'polite' | 'assertive') => void;

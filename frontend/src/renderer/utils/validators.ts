@@ -47,7 +47,7 @@ export function validatePassword(password: string): ValidationResult {
   if (!/\d/.test(password)) {
     errors.push('Password must contain at least one number');
   }
-  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+  if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password)) {
     errors.push('Password must contain at least one special character');
   }
 
@@ -103,7 +103,7 @@ export function scorePasswordStrength(password: string): PasswordStrength {
   else feedback.push('Add uppercase letters');
   if (/\d/.test(password)) score += 10;
   else feedback.push('Add numbers');
-  if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) score += 15;
+  if (/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password)) score += 15;
   else feedback.push('Add special characters');
 
   const uniqueChars = new Set(password).size;

@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { cn } from '../../utils/cn';
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -67,7 +67,7 @@ export function CardTitle({ as: Component = 'h3', className, children, ...props 
   );
 }
 
-export interface CardDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {}
+export type CardDescriptionProps = React.HTMLAttributes<HTMLParagraphElement>
 
 export function CardDescription({ className, children, ...props }: CardDescriptionProps) {
   return (

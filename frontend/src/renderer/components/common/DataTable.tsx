@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import type React from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { cn } from '../../utils/cn';
 import type { SortConfig, SortDirection } from '../../types';
 

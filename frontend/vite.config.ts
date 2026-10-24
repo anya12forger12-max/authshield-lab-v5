@@ -19,15 +19,18 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          radix: [
-            '@radix-ui/react-dialog',
-            '@radix-ui/react-dropdown-menu',
-            '@radix-ui/react-tooltip',
-            '@radix-ui/react-tabs',
-          ],
-          charts: ['echarts', 'echarts-for-react'],
+        manualChunks: (id: string) => {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+              return 'vendor';
+            }
+            if (id.includes('@radix-ui')) {
+              return 'radix';
+            }
+            if (id.includes('echarts')) {
+              return 'charts';
+            }
+          }
         },
       },
     },

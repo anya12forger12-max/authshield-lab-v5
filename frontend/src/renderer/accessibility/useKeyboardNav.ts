@@ -1,4 +1,4 @@
-import { useCallback, useRef, useEffect, type RefObject } from 'react';
+import { useCallback, useRef, useEffect, useState, type RefObject } from 'react';
 
 interface UseKeyboardNavOptions {
   orientation?: 'horizontal' | 'vertical' | 'both';
@@ -18,9 +18,10 @@ export function useKeyboardNav(
   options: UseKeyboardNavOptions = {}
 ): UseKeyboardNavReturn {
   const { orientation = 'vertical', loop = true, typeAhead = true } = options;
+  const [focusedIndex, setFocusedIndex] = useState(0);
   const focusedIndexRef = useRef(0);
   const typeAheadBufferRef = useRef('');
-  const typeAheadTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const typeAheadTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const getFocusableItems = useCallback((): HTMLElement[] => {
     if (!containerRef.current) return [];
@@ -39,6 +40,7 @@ export function useKeyboardNav(
         : Math.max(0, Math.min(index, items.length - 1));
 
       focusedIndexRef.current = clampedIndex;
+      setFocusedIndex(clampedIndex);
       items[clampedIndex]?.focus();
     },
     [getFocusableItems, loop]
@@ -139,6 +141,6 @@ export function useKeyboardNav(
   return {
     handleKeyDown,
     focusItem,
-    focusedIndex: focusedIndexRef.current,
+    focusedIndex,
   };
 }

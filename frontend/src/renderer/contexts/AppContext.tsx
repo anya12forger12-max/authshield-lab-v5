@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
+import type React from 'react';
+import { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
 import { useAppStore } from '../store/appStore';
 import { getTheme, applyTheme } from '../themes/theme-engine';
 import type { AccessibilityPreferences } from '../types';
@@ -28,7 +29,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     message: '',
     priority: 'polite',
   });
-  const announceTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const announceTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const announce: AnnounceFunction = useCallback((message, priority = 'polite') => {
     if (announceTimeoutRef.current) {

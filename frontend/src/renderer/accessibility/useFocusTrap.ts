@@ -1,7 +1,7 @@
 import { useRef, useEffect, useCallback, type RefObject } from 'react';
 
 interface UseFocusTrapReturn {
-  containerRef: RefObject<HTMLDivElement>;
+  containerRef: RefObject<HTMLDivElement | null>;
   focusFirst: () => void;
   focusLast: () => void;
 }

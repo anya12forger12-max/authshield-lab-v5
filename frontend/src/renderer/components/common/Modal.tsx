@@ -7,7 +7,7 @@ export const ModalTrigger = DialogPrimitive.Trigger;
 export const ModalClose = DialogPrimitive.Close;
 export const ModalPortal = DialogPrimitive.Portal;
 
-export interface ModalOverlayProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay> {}
+export type ModalOverlayProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
 
 export const ModalOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
@@ -68,7 +68,7 @@ export const ModalContent = React.forwardRef<
 ));
 ModalContent.displayName = 'ModalContent';
 
-export interface ModalHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
+export type ModalHeaderProps = React.HTMLAttributes<HTMLDivElement>
 
 export function ModalHeader({ className, ...props }: ModalHeaderProps) {
   return (
@@ -79,7 +79,7 @@ export function ModalHeader({ className, ...props }: ModalHeaderProps) {
   );
 }
 
-export interface ModalTitleProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title> {}
+export type ModalTitleProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 
 export const ModalTitle = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
@@ -93,7 +93,7 @@ export const ModalTitle = React.forwardRef<
 ));
 ModalTitle.displayName = 'ModalTitle';
 
-export interface ModalDescriptionProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description> {}
+export type ModalDescriptionProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
 
 export const ModalDescription = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,

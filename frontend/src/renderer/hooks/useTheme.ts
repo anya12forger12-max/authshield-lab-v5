@@ -1,21 +1,42 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useSyncExternalStore } from 'react';
 import { useAppStore } from '../store/appStore';
 import { getTheme, applyTheme } from '../themes/theme-engine';
 import type { Theme } from '../types';
+
+const DARK_QUERY = '(prefers-color-scheme: dark)';
+
+function subscribeSystemScheme(onStoreChange: () => void) {
+  if (typeof window === 'undefined') return () => {};
+  const mediaQuery = window.matchMedia(DARK_QUERY);
+  mediaQuery.addEventListener('change', onStoreChange);
+  return () => mediaQuery.removeEventListener('change', onStoreChange);
+}
+
+function getSystemIsDark() {
+  if (typeof window === 'undefined') return false;
+  return window.matchMedia(DARK_QUERY).matches;
+}
 
 export function useTheme() {
   const { theme, setTheme: setStoreTheme } = useAppStore((state) => ({
     theme: state.theme,
     setTheme: state.setTheme,
   }));
-  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('dark');
+  const systemIsDark = useSyncExternalStore(subscribeSystemScheme, getSystemIsDark, () => false);
+
+  const resolvedTheme: 'light' | 'dark' =
+    theme === 'system'
+      ? systemIsDark
+        ? 'dark'
+        : 'light'
+      : getTheme(theme).name.includes('dark')
+        ? 'dark'
+        : 'light';
 
   const setTheme = useCallback(
     (newTheme: Theme) => {
       setStoreTheme(newTheme);
-      const config = getTheme(newTheme);
-      applyTheme(config);
-      setResolvedTheme(config.name.includes('dark') ? 'dark' : 'light');
+      applyTheme(getTheme(newTheme));
     },
     [setStoreTheme]
   );
@@ -26,22 +47,8 @@ export function useTheme() {
   }, [theme, setTheme]);
 
   useEffect(() => {
-    const config = getTheme(theme);
-    applyTheme(config);
-    setResolvedTheme(config.name.includes('dark') ? 'dark' : 'light');
-  }, [theme]);
-
-  useEffect(() => {
-    if (theme !== 'system') return;
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handler = (e: MediaQueryListEvent) => {
-      const resolved = e.matches ? 'dark' : 'light';
-      setResolvedTheme(resolved);
-      applyTheme(getTheme(resolved));
-    };
-    mediaQuery.addEventListener('change', handler);
-    return () => mediaQuery.removeEventListener('change', handler);
-  }, [theme]);
+    applyTheme(getTheme(theme));
+  }, [theme, systemIsDark]);
 
   return { theme, resolvedTheme, setTheme, toggleTheme };
 }

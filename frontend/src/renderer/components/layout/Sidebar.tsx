@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import type React from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { navigationConfig, navigationGroups, getNavItemsByGroup, getNavItemsByRole } from '../../navigation/navigationConfig';
 import { useAppStore } from '../../store/appStore';
@@ -79,14 +80,14 @@ function NavIcon({ icon }: { icon: string }) {
     ),
   };
 
-  return <>{icons[icon] || icons.LayoutDashboard}</>;
+  return icons[icon] || icons.LayoutDashboard;
 }
 
 function SidebarItem({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
   const location = useLocation();
   const navigate = useNavigate();
   const setSidebarActivePage = useAppStore((s) => s.setSidebarActivePage);
-  const isActive = location.pathname === item.path || location.pathname.startsWith(item.path + '/');
+  const isActive = location.pathname === item.path || location.pathname.startsWith(`${item.path  }/`);
 
   const handleClick = useCallback(() => {
     navigate(item.path);

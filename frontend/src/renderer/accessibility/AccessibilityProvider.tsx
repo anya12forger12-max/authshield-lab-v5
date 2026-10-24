@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useEffect, useCallback, useRef, useState } from 'react';
+import type React from 'react';
+import { createContext, useContext, useEffect, useCallback, useRef, useState } from 'react';
 import { useAppStore } from '../store/appStore';
 import type { AccessibilityPreferences } from '../types';
 
@@ -51,7 +52,7 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
   const [announcerMessage, setAnnouncerMessage] = useState('');
   const [announcerPriority, setAnnouncerPriority] = useState<'polite' | 'assertive'>('polite');
   const shortcutsRef = useRef<Map<string, { handler: (e: KeyboardEvent) => void; keys: string[] }>>(new Map());
-  const announceTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const announceTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const announce = useCallback((message: string, priority: 'polite' | 'assertive' = 'polite') => {
     if (announceTimeoutRef.current) clearTimeout(announceTimeoutRef.current);

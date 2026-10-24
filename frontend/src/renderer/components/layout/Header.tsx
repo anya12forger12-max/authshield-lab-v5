@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import type React from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useAppStore } from '../../store/appStore';
 import { Breadcrumbs } from './Breadcrumbs';
 import { cn } from '../../utils/cn';
