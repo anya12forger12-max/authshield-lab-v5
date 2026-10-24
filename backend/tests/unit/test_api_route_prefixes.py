@@ -34,8 +34,20 @@ DOUBLED = "/api/v1/api/v1"
 
 
 def _paths() -> list[str]:
-    # APIRouter.routes is list[BaseRoute]; only APIRoute carries a path.
-    return [r.path for r in api_v1_router.routes if isinstance(r, APIRoute)]
+    paths: list[str] = []
+
+    def _collect(router, prefix: str = "") -> None:
+        for route in getattr(router, "routes", []):
+            if isinstance(route, APIRoute):
+                paths.append(prefix + route.path)
+            elif hasattr(route, "original_router") and hasattr(route.original_router, "routes"):
+                _collect(
+                    route.original_router,
+                    prefix + getattr(router, "prefix", ""),
+                )
+
+    _collect(api_v1_router)
+    return paths
 
 
 class TestRoutePrefixes:

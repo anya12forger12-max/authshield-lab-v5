@@ -106,7 +106,20 @@ INCLUDES = _declared_includes()
 def _mounted_paths() -> set[str]:
     from app.main import app
 
-    return {route.path for route in app.routes if isinstance(route, APIRoute)}
+    paths: set[str] = set()
+
+    def _collect(router, inherited_prefix: str = "") -> None:
+        for route in getattr(router, "routes", []):
+            if isinstance(route, APIRoute):
+                paths.add(inherited_prefix + route.path)
+            elif hasattr(route, "original_router") and hasattr(route.original_router, "routes"):
+                _collect(
+                    route.original_router,
+                    inherited_prefix + getattr(router, "prefix", ""),
+                )
+
+    _collect(app)
+    return paths
 
 
 def test_the_includes_are_discovered() -> None:
