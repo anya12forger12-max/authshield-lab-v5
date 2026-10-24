@@ -111,8 +111,14 @@ def _mounted_paths() -> set[str]:
     def _collect(router, inherited_prefix: str = "") -> None:
         for route in getattr(router, "routes", []):
             if isinstance(route, APIRoute):
+                # route.path already includes this router's own prefix, so only
+                # inherited (ancestor) prefixes are prepended.
                 paths.add(inherited_prefix + route.path)
             elif hasattr(route, "original_router") and hasattr(route.original_router, "routes"):
+                # original_router is mounted on `router`; router's prefix applies
+                # to original_router's routes. original_router's own prefix is
+                # already baked into its direct APIRoute paths, so it is not
+                # added here (that would double-count).
                 _collect(
                     route.original_router,
                     inherited_prefix + getattr(router, "prefix", ""),

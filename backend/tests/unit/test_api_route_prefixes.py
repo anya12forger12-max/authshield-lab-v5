@@ -34,13 +34,22 @@ DOUBLED = "/api/v1/api/v1"
 
 
 def _paths() -> list[str]:
+    """Collect every APIRoute path under api_v1_router, recursing into mounts.
+
+    FastAPI >= 0.143 nests included routers behind ``_IncludedRouter`` mount
+    objects, so ``api_v1_router.routes`` contains ``_IncludedRouter`` instances
+    rather than direct ``APIRoute`` instances. Recurse into
+    ``.original_router`` to reach the leaf routes.
+    """
     paths: list[str] = []
 
     def _collect(router, prefix: str = "") -> None:
         for route in getattr(router, "routes", []):
             if isinstance(route, APIRoute):
+                # route.path already includes this router's own prefix.
                 paths.append(prefix + route.path)
             elif hasattr(route, "original_router") and hasattr(route.original_router, "routes"):
+                # original_router is mounted on `router`; router's prefix applies.
                 _collect(
                     route.original_router,
                     prefix + getattr(router, "prefix", ""),
