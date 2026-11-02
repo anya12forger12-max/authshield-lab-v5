@@ -2,7 +2,7 @@ fastapi==0.161.1
 uvicorn[standard]==0.54.0
 sqlalchemy[asyncio]==2.1.6
 aiosqlite==0.22.1
-pydantic==2.14.1
+pydantic==2.14.2
 pydantic-settings==2.16.1
 python-jose[cryptography]==3.5.0
 passlib[bcrypt]==1.7.4
