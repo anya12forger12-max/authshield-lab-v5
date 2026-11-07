@@ -1,3 +1,5 @@
+> **DEPRECATED / ARCHIVED**: This repository has been merged into the canonical **[authshield-lab](https://github.com/anya12forger12-max/authshield-lab)** project. Please use authshield-lab instead. No further updates will be made here.
+
 <!-- Badges Placeholder -->
 <!-- [![Build Status](https://img.shields.io/github/actions/workflow/status/anya12forger12-max/authshield-lab/ci.yml?branch=main)](https://github.com/anya12forger12-max/authshield-lab/actions) -->
 <!-- [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) -->
