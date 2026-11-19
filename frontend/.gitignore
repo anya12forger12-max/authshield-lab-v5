@@ -1,2 +1,6 @@
 .vercel
 .env*
+src/renderer/**/*.js
+src/renderer/**/*.js.map
+src/renderer/**/*.d.ts
+src/renderer/**/*.d.ts.map
